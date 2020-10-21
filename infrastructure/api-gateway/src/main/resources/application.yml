@@ -1,0 +1,59 @@
+# 服务端口
+server:
+  port: 8222
+# 服务名
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      discovery:
+        # nacos服务地址
+        server-addr: 127.0.0.1:8848
+        ip: 127.0.0.1
+    gateway:
+      discovery:
+        locator:
+          #使用服务发现路由
+          enabled: true
+      routes:
+        - id: service-acl
+          uri: lb://service-acl
+          predicates:
+            - Path=/*/acl/**
+
+        - id: service-cms
+          uri: lb://service-cms
+          predicates:
+            - Path=/educms/**
+
+        - id: service-edu
+          uri: lb://service-edu
+          predicates:
+            - Path=/eduservice/**
+
+        - id: service-msm
+          uri: lb://service-msm
+          predicates:
+            - Path=/edumsm/**
+
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/order/**
+
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/eduoss/**
+
+        - id: service-ucenter
+          uri: lb://service-ucenter
+          predicates:
+            - Path=/ucenter/**
+            - Path=/api/**
+
+        - id: service-vod
+          uri: lb://service-vod
+          predicates:
+            - Path=/eduvod/**
